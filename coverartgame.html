@@ -12,8 +12,128 @@
 <body>
     <h1>What video game is this cover art for?</h1>
 
+    <p>Score: <span id="score">0</span></p>
 
+    <img id="coverImage" src="" alt="Random video game cover art for trivia question" width="300">
 
-    <a href="index.html">
-        <button type="button">Return to Homepage</button>
-    </a>
+    <form id="quizForm">
+        <p>Select your answer:</p>
+
+        <label>
+            <input type="radio" name="game" value="halo"> Halo
+        </label><br>
+
+        <label>
+            <input type="radio" name="game" value="mario"> Mario
+        </label><br>
+
+        <label>
+            <input type="radio" name="game" value="doom"> Doom
+        </label><br>
+
+        <label>
+            <input type="radio" name="game" value="tetris"> Tetris
+        </label><br><br>
+
+        <button type="submit">Confirm Answer</button>
+    </form>
+
+    <p id="result"></p>
+
+    <button id="nextBtn" style="display: none;">Next Question</button>
+    <button id="resultsBtn" style="display: none;">View Results</button>
+
+    <br><br>
+    <a href="index.html" class="button-link">Return to Homepage</a>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const playerName = params.get("name");
+
+    let questionCount = 0;
+    const maxQuestions = 4;
+
+    const questions = [
+        { src: "images/halo.png", answer: "halo" },
+        { src: "images/mario.png", answer: "mario" },
+        { src: "images/doom.png", answer: "doom" },
+        { src: "images/tetris.png", answer: "tetris" }
+    ];
+
+    let remainingQuestions = [...questions];
+    let currentQuestion;
+    let score = 0;
+
+    function loadQuestion() {
+
+        if (questionCount >= maxQuestions) {
+            return;
+        }
+
+        if (remainingQuestions.length === 0) {
+            remainingQuestions = [...questions];
+        }
+
+        const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+        currentQuestion = remainingQuestions[randomIndex];
+
+        remainingQuestions.splice(randomIndex, 1);
+
+        document.getElementById("coverImage").src = currentQuestion.src;
+
+        document.getElementById("quizForm").reset();
+        document.getElementById("result").textContent = "";
+        document.getElementById("nextBtn").style.display = "none";
+
+        const radios = document.querySelectorAll('input[name="game"]');
+        radios.forEach(radio => radio.disabled = false);
+
+        document.querySelector('#quizForm button').disabled = false;
+    }
+
+    loadQuestion();
+
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const selected = document.querySelector('input[name="game"]:checked');
+
+        if (!selected) {
+            document.getElementById("result").textContent = "Please select an answer!";
+            return;
+        }
+
+        if (selected.value === currentQuestion.answer) {
+            document.getElementById("result").textContent = "Correct!";
+            score++;
+            document.getElementById("score").textContent = score;
+        } else {
+            document.getElementById("result").textContent =
+                "Incorrect! The correct answer was " + currentQuestion.answer + ".";
+        }
+
+        questionCount++;
+
+        if (questionCount < maxQuestions) {
+            document.getElementById("nextBtn").style.display = "inline-block";
+        } else {
+            document.getElementById("nextBtn").style.display = "none";
+            document.getElementById("resultsBtn").style.display = "inline-block";
+        }
+
+        const radios = document.querySelectorAll('input[name="game"]');
+        radios.forEach(radio => radio.disabled = true);
+
+        document.querySelector('#quizForm button').disabled = true;
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", function() {
+        loadQuestion();
+    });
+
+    document.getElementById("resultsBtn").addEventListener("click", function() {
+    window.location.href = "results.html?score=" + score + "&name=" + encodeURIComponent(playerName);    });
+</script>
+
+</body>
+</html>

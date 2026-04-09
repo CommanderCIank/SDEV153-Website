@@ -13,13 +13,25 @@
     <h1>Select Game Type</h1>
 
     <h2>Cover Art Game</h2>
-    <a href="coverartgame.html">
+    <a id="coverGameLink" href="#">
         <button type="button">Start Cover Art Game</button>
     </a>
 
     <h2>Audio Clip Game</h2>
-    <a href="audioclipgame.html">
+    <a id="audioGameLink" href="#">
         <button type="button">Start Audio Clip Game</button>
     </a>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name") || "Player";
+
+    document.getElementById("coverGameLink").href =
+        "coverartgame.html?name=" + encodeURIComponent(name);
+
+    document.getElementById("audioGameLink").href =
+        "audioclipgame.html?name=" + encodeURIComponent(name);
+</script>
+
 </body>
 </html>

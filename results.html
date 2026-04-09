@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="styles.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+
+    <h1 id="finalTitle"></h1>
+
+    <p id="finalScore"></p>
+
+    <a href="index.html" class="button-link">Return to Homepage</a>
+
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const score = params.get("score");
+    const name = params.get("name");
+
+    document.getElementById("finalTitle").textContent =
+        "Final Score For " + name;
+
+    document.getElementById("finalScore").textContent =
+        "Your final score is: " + score + " / 4";
+</script>
+
+</body>
+</html>

@@ -5,15 +5,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cover Art Game Trivia</title>
+    <title>Audio Clip Game Trivia</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <h1>What video game is this audio clip from?</h1>
 
+    <p>Score: <span id="score">0</span></p>
 
+    <!-- ✅ AUDIO PLAYER -->
+    <audio id="audioPlayer" controls>
+        <source id="audioSource" src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-    <a href="index.html">
-        <button type="button">Return to Homepage</button>
-    </a>
+    <form id="quizForm">
+        <p>Select your answer:</p>
+
+        <label>
+            <input type="radio" name="game" value="halo"> Halo
+        </label><br>
+
+        <label>
+            <input type="radio" name="game" value="mario"> Mario
+        </label><br>
+
+        <label>
+            <input type="radio" name="game" value="doom"> Doom
+        </label><br>
+
+        <label>
+            <input type="radio" name="game" value="tetris"> Tetris
+        </label><br><br>
+
+        <button type="submit">Confirm Answer</button>
+    </form>
+
+    <p id="result"></p>
+
+    <button id="nextBtn" style="display: none;">Next Question</button>
+    <button id="resultsBtn" style="display: none;">View Results</button>
+
+    <br><br>
+    <a href="index.html" class="button-link">Return to Homepage</a>
+
+<script>
+    // ✅ Get player name
+    const params = new URLSearchParams(window.location.search);
+    const playerName = params.get("name") || "Player";
+
+    // ✅ Question counter
+    let questionCount = 0;
+    const maxQuestions = 4;
+
+    // ✅ Audio questions
+    const questions = [
+        { src: "audio/halo.mp3", answer: "halo" },
+        { src: "audio/mario.mp3", answer: "mario" },
+        { src: "audio/doom.mp3", answer: "doom" },
+        { src: "audio/tetris.mp3", answer: "tetris" }
+    ];
+
+    let remainingQuestions = [...questions];
+    let currentQuestion;
+    let score = 0;
+
+    function loadQuestion() {
+
+        if (questionCount >= maxQuestions) {
+            return;
+        }
+
+        if (remainingQuestions.length === 0) {
+            remainingQuestions = [...questions];
+        }
+
+        const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+        currentQuestion = remainingQuestions[randomIndex];
+
+        remainingQuestions.splice(randomIndex, 1);
+
+        // ✅ Load audio
+        const audioSource = document.getElementById("audioSource");
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        audioSource.src = currentQuestion.src;
+        audioPlayer.load(); // refresh player
+
+        // Reset UI
+        document.getElementById("quizForm").reset();
+        document.getElementById("result").textContent = "";
+        document.getElementById("nextBtn").style.display = "none";
+
+        // Re-enable inputs
+        const radios = document.querySelectorAll('input[name="game"]');
+        radios.forEach(radio => radio.disabled = false);
+
+        document.querySelector('#quizForm button').disabled = false;
+    }
+
+    loadQuestion();
+
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const selected = document.querySelector('input[name="game"]:checked');
+
+        if (!selected) {
+            document.getElementById("result").textContent = "Please select an answer!";
+            return;
+        }
+
+        if (selected.value === currentQuestion.answer) {
+            document.getElementById("result").textContent = "Correct!";
+            score++;
+            document.getElementById("score").textContent = score;
+        } else {
+            document.getElementById("result").textContent =
+                "Incorrect! The correct answer was " + currentQuestion.answer + ".";
+        }
+
+        questionCount++;
+
+        if (questionCount < maxQuestions) {
+            document.getElementById("nextBtn").style.display = "inline-block";
+        } else {
+            document.getElementById("nextBtn").style.display = "none";
+            document.getElementById("resultsBtn").style.display = "inline-block";
+        }
+
+        // Disable inputs
+        const radios = document.querySelectorAll('input[name="game"]');
+        radios.forEach(radio => radio.disabled = true);
+
+        document.querySelector('#quizForm button').disabled = true;
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", function() {
+        loadQuestion();
+    });
+
+    document.getElementById("resultsBtn").addEventListener("click", function() {
+        window.location.href = "results.html?score=" + score + "&name=" + encodeURIComponent(playerName);
+    });
+</script>
+
+</body>
+</html>
