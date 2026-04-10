@@ -12,7 +12,25 @@
 <body>
     <h1>What video game is this cover art for?</h1>
 
-    <p>Score: <span id="score">0</span></p>
+    <h2>Game Options</h2>
+    <ul>
+        <li>Halo</li>
+        <li>Mario</li>
+        <li>Doom</li>
+        <li>Tetris</li>
+    </ul>
+
+    <h2>Score Breakdown</h2>
+    <table border="1">
+        <tr>
+            <th>Question</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Score</td>
+            <td id="tableScore">0</td>
+        </tr>
+    </table>
 
     <img id="coverImage" src="" alt="Random video game cover art for trivia question" width="300">
 
@@ -20,19 +38,19 @@
         <p>Select your answer:</p>
 
         <label>
-            <input type="radio" name="game" value="halo"> Halo
+            <input type="radio" name="game" value="Halo"> Halo
         </label><br>
 
         <label>
-            <input type="radio" name="game" value="mario"> Mario
+            <input type="radio" name="game" value="Mario"> Mario
         </label><br>
 
         <label>
-            <input type="radio" name="game" value="doom"> Doom
+            <input type="radio" name="game" value="Doom"> Doom
         </label><br>
 
         <label>
-            <input type="radio" name="game" value="tetris"> Tetris
+            <input type="radio" name="game" value="Tetris"> Tetris
         </label><br><br>
 
         <button type="submit">Confirm Answer</button>
@@ -54,10 +72,10 @@
     const maxQuestions = 4;
 
     const questions = [
-        { src: "images/halo.png", answer: "halo" },
-        { src: "images/mario.png", answer: "mario" },
-        { src: "images/doom.png", answer: "doom" },
-        { src: "images/tetris.png", answer: "tetris" }
+        { src: "images/halo.png", answer: "Halo", alt: "Halo Combat Evolved cover art" },
+        { src: "images/mario.png", answer: "Mario", alt: "Super Mario Brothers cover art" },
+        { src: "images/doom.png", answer: "Doom", alt: "Doom 1995 cover art" },
+        { src: "images/tetris.png", answer: "Tetris", alt: "Tetris 1984 cover art" }
     ];
 
     let remainingQuestions = [...questions];
@@ -106,7 +124,7 @@
         if (selected.value === currentQuestion.answer) {
             document.getElementById("result").textContent = "Correct!";
             score++;
-            document.getElementById("score").textContent = score;
+            document.getElementById("tableScore").textContent = score;
         } else {
             document.getElementById("result").textContent =
                 "Incorrect! The correct answer was " + currentQuestion.answer + ".";
@@ -132,7 +150,8 @@
     });
 
     document.getElementById("resultsBtn").addEventListener("click", function() {
-    window.location.href = "results.html?score=" + score + "&name=" + encodeURIComponent(playerName);    });
+        window.location.href = "results.html?score=" + score + "&name=" + encodeURIComponent(playerName);
+    });
 </script>
 
 </body>
