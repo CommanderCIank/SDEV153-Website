@@ -10,59 +10,56 @@
 </head>
 
 <body>
+    <img src="images/logo.png" alt="Game Trivia Logo" class="logo">
+
     <h1>What video game is this cover art for?</h1>
 
-    <h2>Game Options</h2>
-    <ul>
-        <li>Halo</li>
-        <li>Mario</li>
-        <li>Doom</li>
-        <li>Tetris</li>
-    </ul>
+    <div class="container">
 
-    <h2>Score Breakdown</h2>
-    <table border="1">
-        <tr>
-            <th>Question</th>
-            <th>Status</th>
-        </tr>
-        <tr>
-            <td>Score</td>
-            <td id="tableScore">0</td>
-        </tr>
-    </table>
+        <div class="left-panel">
 
-    <img id="coverImage" src="" alt="Random video game cover art for trivia question" width="300">
 
-    <form id="quizForm">
-        <p>Select your answer:</p>
+        </div>
 
-        <label>
-            <input type="radio" name="game" value="Halo"> Halo
-        </label><br>
+        <div class="right-panel">
+            <img id="coverImage" src="" alt="Random video game cover art for trivia question" width="300">
 
-        <label>
-            <input type="radio" name="game" value="Mario"> Mario
-        </label><br>
+            <form id="quizForm">
+                <p>Select your answer:</p>
 
-        <label>
-            <input type="radio" name="game" value="Doom"> Doom
-        </label><br>
+                <label>
+                    <input type="radio" name="game" value="Halo"> Halo
+                </label>
 
-        <label>
-            <input type="radio" name="game" value="Tetris"> Tetris
-        </label><br><br>
+                <label>
+                    <input type="radio" name="game" value="Mario"> Mario
+                </label>
+                <label>
+                    <input type="radio" name="game" value="Doom"> Doom
+                </label>
 
-        <button type="submit">Confirm Answer</button>
-    </form>
+                <label>
+                    <input type="radio" name="game" value="Tetris"> Tetris
+                </label><br><br>
 
-    <p id="result"></p>
+                <button type="submit">Confirm Answer</button>
 
-    <button id="nextBtn" style="display: none;">Next Question</button>
-    <button id="resultsBtn" style="display: none;">View Results</button>
+                            <table>
+                <tr>
+                    <td>Score</td>
+                    <td id="tableScore">0</td>
+                </tr>
+            </table>
+            </form>
 
-    <br><br>
-    <a href="index.html" class="button-link">Return to Homepage</a>
+            <p id="result"></p>
+
+            <button id="nextBtn" style="display: none;">Next Question</button>
+            <button id="resultsBtn" style="display: none;">View Results</button>
+        </div>
+
+    </div>
+
 
 <script>
     const params = new URLSearchParams(window.location.search);
@@ -84,9 +81,7 @@
 
     function loadQuestion() {
 
-        if (questionCount >= maxQuestions) {
-            return;
-        }
+        if (questionCount >= maxQuestions) return;
 
         if (remainingQuestions.length === 0) {
             remainingQuestions = [...questions];
@@ -98,14 +93,13 @@
         remainingQuestions.splice(randomIndex, 1);
 
         document.getElementById("coverImage").src = currentQuestion.src;
+        document.getElementById("coverImage").alt = currentQuestion.alt;
 
         document.getElementById("quizForm").reset();
         document.getElementById("result").textContent = "";
         document.getElementById("nextBtn").style.display = "none";
 
-        const radios = document.querySelectorAll('input[name="game"]');
-        radios.forEach(radio => radio.disabled = false);
-
+        document.querySelectorAll('input[name="game"]').forEach(r => r.disabled = false);
         document.querySelector('#quizForm button').disabled = false;
     }
 
@@ -135,19 +129,14 @@
         if (questionCount < maxQuestions) {
             document.getElementById("nextBtn").style.display = "inline-block";
         } else {
-            document.getElementById("nextBtn").style.display = "none";
             document.getElementById("resultsBtn").style.display = "inline-block";
         }
 
-        const radios = document.querySelectorAll('input[name="game"]');
-        radios.forEach(radio => radio.disabled = true);
-
+        document.querySelectorAll('input[name="game"]').forEach(r => r.disabled = true);
         document.querySelector('#quizForm button').disabled = true;
     });
 
-    document.getElementById("nextBtn").addEventListener("click", function() {
-        loadQuestion();
-    });
+    document.getElementById("nextBtn").addEventListener("click", loadQuestion);
 
     document.getElementById("resultsBtn").addEventListener("click", function() {
         window.location.href = "results.html?score=" + score + "&name=" + encodeURIComponent(playerName);
@@ -155,4 +144,19 @@
 </script>
 
 </body>
+
+<footer class="site-footer">
+
+    <a href="index.html" class="button-link">Return to Homepage</a>
+
+    <p>This website is for educational purposes only.</p>
+    <p> Game content belongs to their respective creators:</p>
+    <ul>
+        <li><a href="https://mario.nintendo.com/" target="_blank">Mario</a></li>
+        <li><a href="https://www.halowaypoint.com/" target="_blank">Halo</a></li>
+        <li><a href="https://doom.bethesda.net/en-US/doom_doomii" target="_blank">Doom</a></li>
+        <li><a href="https://tetris.com/" target="_blank">Tetris</a></li>
+    </ul>
+</footer>
+
 </html>

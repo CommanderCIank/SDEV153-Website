@@ -1,29 +1,100 @@
 body {
     margin: 0;
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+
     background: white;
     font-family: Arial, sans-serif;
     text-align: center;
+
     padding: 20px;
 }
+
+/* =========================
+   HEADER / LOGO
+========================= */
+
+.logo {
+    width: 120px;
+    display: block;
+    margin: 10px auto;
+}
+
+/* =========================
+   MAIN GAME LAYOUT (CENTERED)
+========================= */
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* This is now your main "game card" */
+.right-panel {
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Score area (no longer a side panel) */
+.left-panel {
+    display: none; /* hides old layout system safely */
+}
+
+/* =========================
+   TEXT
+========================= */
 
 h1, h2, p {
     margin: 10px 0;
 }
 
-ul {
-    list-style-type: disc;
-    padding-left: 20px;
-    text-align: left;
+/* =========================
+   IMAGE
+========================= */
+
+img {
+    margin: 15px 0;
+    border-radius: 8px;
 }
+
+/* =========================
+   FORM
+========================= */
+
+form {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* radio labels centered but readable */
+form label {
+    display: block;
+    text-align: left;
+    width: fit-content;
+    margin: 2px 0;
+    line-height: 1.0;
+}
+
+/* =========================
+   TABLE (SCORE)
+   now centered under button
+========================= */
 
 table {
     border-collapse: collapse;
-    margin: 10px auto;
+    margin: 15px auto;
 }
 
 table, th, td {
@@ -34,43 +105,81 @@ th, td {
     padding: 8px 12px;
 }
 
-img {
-    margin: 15px 0;
-    border-radius: 8px;
-}
-
-form {
-    margin: 15px 0;
-}
+/* =========================
+   BUTTONS
+========================= */
 
 button {
     margin: 5px;
-    padding: 10px 15px;
+    padding: 10px 20px;
+
     border: none;
     border-radius: 5px;
+
     cursor: pointer;
+
+    background-color: #007BFF;
+    color: white;
+
+    font-weight: bold;
 }
 
 .button-link {
-    display: inline-block;
+    display: block;
+    width: fit-content;
+
+    margin: 20px auto;
     padding: 10px 20px;
+
     background-color: #007BFF;
     color: white;
+
     text-decoration: none;
     border-radius: 5px;
+
     font-weight: bold;
-    margin-top: 10px;
+    text-align: center;
 }
 
 .button-link:hover {
     background-color: #0056b3;
 }
 
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
+/* =========================
+   LISTS (FOOTER)
+========================= */
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.site-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.site-footer li {
+    margin: 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .right-panel {
+        width: 100%;
+    }
 }
