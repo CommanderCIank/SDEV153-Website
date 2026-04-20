@@ -14,19 +14,11 @@ body {
     padding: 20px;
 }
 
-/* =========================
-   HEADER / LOGO
-========================= */
-
 .logo {
     width: 120px;
     display: block;
     margin: 10px auto;
 }
-
-/* =========================
-   MAIN GAME LAYOUT (CENTERED)
-========================= */
 
 .container {
     display: flex;
@@ -34,7 +26,6 @@ body {
     width: 100%;
 }
 
-/* This is now your main "game card" */
 .right-panel {
     width: 100%;
     max-width: 500px;
@@ -45,31 +36,19 @@ body {
     text-align: center;
 }
 
-/* Score area (no longer a side panel) */
 .left-panel {
-    display: none; /* hides old layout system safely */
+    display: none;
 }
-
-/* =========================
-   TEXT
-========================= */
 
 h1, h2, p {
     margin: 10px 0;
 }
-
-/* =========================
-   IMAGE
-========================= */
 
 img {
     margin: 15px 0;
     border-radius: 8px;
 }
 
-/* =========================
-   FORM
-========================= */
 
 form {
     margin: 15px 0;
@@ -78,7 +57,6 @@ form {
     align-items: center;
 }
 
-/* radio labels centered but readable */
 form label {
     display: block;
     text-align: left;
@@ -86,11 +64,6 @@ form label {
     margin: 2px 0;
     line-height: 1.0;
 }
-
-/* =========================
-   TABLE (SCORE)
-   now centered under button
-========================= */
 
 table {
     border-collapse: collapse;
@@ -105,9 +78,6 @@ th, td {
     padding: 8px 12px;
 }
 
-/* =========================
-   BUTTONS
-========================= */
 
 button {
     margin: 5px;
@@ -145,10 +115,6 @@ button {
     background-color: #0056b3;
 }
 
-/* =========================
-   LISTS (FOOTER)
-========================= */
-
 ul {
     list-style-type: disc;
     padding-left: 20px;
@@ -169,10 +135,6 @@ ul {
 .site-footer li {
     margin: 0;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 768px) {
     .container {
